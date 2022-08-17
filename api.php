@@ -27,6 +27,9 @@ switch ($_GET['api-name']) {
     case 'get-todos':
         $api->getAll()->output();
         break;
+    case 'delete-todo':
+        $api->delete()->output();
+        break;
     case 'get-todo-from-db':
         $servername = "localhost";
         $username = "root";

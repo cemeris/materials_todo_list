@@ -1,0 +1,40 @@
+body {
+    margin:0;
+}
+
+.wrapper {
+    max-width:400px;
+    margin:100px auto;
+}
+
+.tood_list {
+    &__item {
+        padding:4px;
+        border:1px solid grey;
+        border-radius: 6px;
+        display:flex;
+        justify-content: space-between;
+
+
+        .text {
+            display:inline-block;
+            padding:4px;
+            background:rgba(0, 0, 0, 0.211);
+        }
+
+        .delete {
+            display:inline-block;
+            padding:6px;
+            cursor:pointer;
+
+            &:hover {
+                background: rgba(0, 0, 0, 0.593);
+                color: #fff;
+            }
+        }
+    }
+}
+
+.template {
+    display:none !important;
+}

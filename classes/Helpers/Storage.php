@@ -30,6 +30,16 @@ class Storage
         return $id;
     }
 
+    public function delete($id) {
+        if (!array_key_exists($id, $this->data['entries'])) {
+            return false;
+        }
+        unset($this->data['entries'][$id]);
+        $content = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        file_put_contents($this->file_name, $content);
+        return true;
+    }
+
     public function getAll() {
         return $this->data['entries'];
     }
