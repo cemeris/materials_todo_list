@@ -1,0 +1,60 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+
+<form action="api.php?api-name=add-todo" method="post">
+  <h3>Todo list</h3>
+  <label for="">Task</label>
+  <input type="text" name="task_message" />
+  <button type="submit">add</button>
+</form>
+
+<div class="todo_list"></div>
+
+<script>
+  const forms = document.querySelectorAll("form");
+  const todo_list = document.querySelector(".todo_list");
+
+  for (let i = 0; i < forms.length; i++) {
+    forms[i].onsubmit = function (event) {
+      event.preventDefault();
+      const data = new FormData(this);
+
+      if (this.method == "post") {
+        fetch(this.action, {
+          method: "post",
+          body: data,
+        })
+          .then((response) => response.json())
+          .then((result) => addResponseHook(result, data));
+      }
+
+      this.reset();
+    };
+  }
+
+  fetch("api.php?api-name=get-todos")
+    .then((response) => response.json())
+    .then((result) => getResponseHook(result));
+
+  function getResponseHook(response) {
+    if (response.status) {
+      for (let id in response.entries) {
+        const entry = response.entries[id];
+        displayTask(id, entry.message, entry.status);
+      }
+    }
+  }
+
+  function addResponseHook(response, data) {
+    if (response.status) {
+      displayTask(response.id, data.get("task_message"));
+    }
+  }
+
+  function displayTask(id, message, status = false) {
+    console.log(id, message);
+    todo_list.append("id:", id, " task:", message);
+    todo_list.innerHTML += "<br>";
+  }
+</script>
